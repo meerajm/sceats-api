@@ -1,7 +1,5 @@
 const express = require("express");
 const restaurantRouter = require("./routes/restaurantRoutes");
-const { connect } = require("./config/database");
-connect();
 const app = express();
 
 app.use(express.json());
