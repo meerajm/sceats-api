@@ -1,15 +1,11 @@
 const jwt = require("jsonwebtoken");
 const accessTokenSecret = "youraccesstokensecret";
 
-/**
- * This will make an authentication call and validate token
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- */
+// This will make an authentication call and validate token
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
+    // authHeader has the value like Bearer [JWT_TOKEN] so we need only the JWT part
     const token = authHeader.split(" ")[1];
     jwt.verify(token, accessTokenSecret, (err, user) => {
       if (err) {

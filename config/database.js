@@ -1,19 +1,18 @@
 const mongoose = require("mongoose");
 
 const dbNames = {
-  production: 'sceats',
-  test: 'test-sceats',
-  development: 'dev-sceats'
-}
+  production: "sceats",
+  test: "test-sceats",
+  development: "dev-sceats",
+};
 const connect = () => {
-  // replace with your own or MongoCloud string
-  const mongoConnectionString = `mongodb://localhost/${dbNames[process.env.NODE_ENV]}`;
+  const mongoConnectionString = `mongodb+srv://<username>:<password>@cluster0.lfmmd.mongodb.net/<dbName>?retryWrites=true&w=majority`;
   const opts = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
   mongoose.connect(mongoConnectionString, opts);
-  console.log({mongoConnectionString});
+  mongoose.set("useFindAndModify", false);
 };
 
 module.exports = { connect };

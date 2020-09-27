@@ -1,55 +1,66 @@
 const express = require("express");
 const app = express();
 const auth = require("../auth");
-
-const data = {
-  restaurants: [],
-};
-
+const restaurantModel = require("../models/restaurant");
 const baseURI = "/api/v1/restaurants";
-app.get("/", (req, res) => res.json({ message: "Hello World" }));
 
 //To get all restaurant details
-app.get(baseURI, (req, res) => {
-  return res.json(data);
+app.get(baseURI, auth, async (req, res) => {
+  const restaurants = await restaurantModel.find({});
+  try {
+    res.send(restaurants);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 //To add data to the restaurant api
-app.post(baseURI, auth, (req, res) => {
-  const { body } = req;
-  body._id = data.restaurants.length + 1; //Change
-  data.restaurants.push(body);
-  return res.json(data);
+app.post(baseURI, auth, async (req, res) => {
+  const restaurant = new restaurantModel(req.body);
+  try {
+    await restaurant.save();
+    res.send(restaurant);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 //To find a restaurant based on restaurant id
-app.get(baseURI + "/:restaurantId", auth, (req, res) => {
-  const { restaurantId } = req.params;
-  const restaurant = data.restaurants.find(
-    (aRestaurant) => aRestaurant._id === +restaurantId
-  );
-  return res.json(restaurant);
+app.get(baseURI + "/:restaurantId", auth, async (req, res) => {
+  try {
+    const restaurant = await restaurantModel.findById(req.params.restaurantId);
+    if (!restaurant) return res.status(404).send("No restaurant found");
+    res.send(restaurant);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 //To delete a restaurant based on an id
-app.delete(baseURI + "/:restaurantId", auth, (req, res) => {
-  const { restaurantId } = req.params;
-  const index = data.restaurants.findIndex(
-    (aRestaurant) => aRestaurant._id === +restaurantId
-  );
-  data.restaurants.splice(index, 1);
-  return res.json(data);
+app.delete(baseURI + "/:restaurantId", auth, async (req, res) => {
+  try {
+    const restaurant = await restaurantModel.findByIdAndDelete(
+      req.params.restaurantId
+    );
+    if (!restaurant) return res.status(404).send("No restaurant found");
+    res.status(200).send("Deleted: " + restaurant);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 //To update a restaurant details based on Id
-app.patch(baseURI + "/:restaurantId", auth, (req, res) => {
-  const { body } = req;
-  const { restaurantId } = req.params;
-  const index = data.restaurants.findIndex(
-    (aRestaurant) => aRestaurant._id === +restaurantId
-  );
-  data.restaurants[index].name = body.name;
-  return res.json(data);
+app.patch(baseURI + "/:restaurantId", auth, async (req, res) => {
+  try {
+    const restaurant = await restaurantModel.findByIdAndUpdate(
+      req.params.restaurantId,
+      req.body
+    );
+    if (!restaurant) return res.status(404).send("No restaurant found");
+    res.status(200).send("Updated restaurant.");
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 module.exports = app;

@@ -1,8 +1,9 @@
 # sceats-api
-Basic CRUD operations api.
+Basic CRUD operations api with Node, Express and MongoDB.
 ## Dependencies required to run
 - express
 - jsonwebtoken
+- mongoose
 
 ## routes
 To get available records make a get call to ``` /api/v1/restaurants ```
