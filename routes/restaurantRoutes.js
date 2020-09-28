@@ -8,8 +8,7 @@ const data = {
 };
 
 //To get all restaurant details
-app.get(baseURI, (req, res) => {
-  //Here there is no token needed
+app.get(baseURI, auth, (req, res) => {
   return res.json(data);
 });
 
