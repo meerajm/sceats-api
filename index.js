@@ -9,7 +9,9 @@ app.listen(5001, () => {
   console.log("Application running in localhost: 5001");
 });
 
-const user = { username: "meera", password: "pwd1234" };
+require("dotenv").config();
+//Create an object to have your username and password
+const user = { username: process.env.UNAME, password: process.env.PWD };
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 
