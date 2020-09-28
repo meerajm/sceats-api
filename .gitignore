@@ -4,3 +4,5 @@
 # unrequired folders
 /config
 /models
+
+.env
