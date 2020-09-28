@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const dbNames = {
   production: "sceats",
@@ -6,7 +7,7 @@ const dbNames = {
   development: "dev-sceats",
 };
 const connect = () => {
-  const mongoConnectionString = `mongodb+srv://<username>:<password>@cluster0.lfmmd.mongodb.net/<dbName>?retryWrites=true&w=majority`;
+  const mongoConnectionString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.lfmmd.mongodb.net/${process.env.MONGO_DBNAME}?retryWrites=true&w=majority`;
   const opts = {
     useNewUrlParser: true,
     useUnifiedTopology: true,

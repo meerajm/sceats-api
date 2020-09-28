@@ -1,6 +1,4 @@
 # dependencies
 /node_modules
 
-# unrequired folders
-/config
-/models
+.env
