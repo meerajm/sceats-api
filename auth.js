@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const accessTokenSecret = "youraccesstokensecret";
 
-// This will make an authentication call and validate token
+//This will make an authentication call and validate token
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -18,4 +18,5 @@ const authenticateJWT = (req, res, next) => {
     res.sendStatus(401);
   }
 };
+
 module.exports = authenticateJWT;

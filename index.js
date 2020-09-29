@@ -1,7 +1,5 @@
 const express = require("express");
 const restaurantRouter = require("./routes/restaurantRoutes");
-const { connect } = require("./config/database");
-connect();
 const app = express();
 
 app.use(express.json());
@@ -29,7 +27,7 @@ app.post("/login", (req, res) => {
     const accessToken = jwt.sign(
       { username: user.username },
       accessTokenSecret,
-      { expiresIn: "24h" } //Access token is valid for one day
+      { expiresIn: "24h" } // Token expires after one day
     );
     res.json({ accessToken });
   } else {
