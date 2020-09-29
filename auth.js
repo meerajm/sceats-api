@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
-const accessTokenSecret = "youraccesstokensecret";
+
+require("dotenv").config();
+const accessTokenSecret = process.env.MY_TOKEN_SECRET;
 
 //This will make an authentication call and validate token
 const authenticateJWT = (req, res, next) => {
