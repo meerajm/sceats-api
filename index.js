@@ -17,7 +17,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-const accessTokenSecret = "youraccesstokensecret";
+const accessTokenSecret = process.env.MY_TOKEN_SECRET;
 
 //To login
 app.post("/login", (req, res) => {
