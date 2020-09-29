@@ -3,7 +3,6 @@ Basic CRUD operations api with Node, Express and MongoDB.
 ## Dependencies required to run
 - express
 - jsonwebtoken
-- mongoose
 - dotenv
 
 ## routes
